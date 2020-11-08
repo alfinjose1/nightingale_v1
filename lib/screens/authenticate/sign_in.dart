@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nightingale_v1/services/auth.dart';
 import 'package:nightingale_v1/shared/constants.dart';
+import 'package:nightingale_v1/shared/loading.dart';
 
 class SignIn extends StatefulWidget {
 
@@ -16,6 +17,7 @@ class _SignInState extends State<SignIn> {
   //instance of the AuthService
   final AuthService _auth =  AuthService();
   final _formKey = GlobalKey<FormState>();
+  bool loading = false;
 
   //text field state 
   String email = '';
@@ -26,7 +28,7 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
@@ -65,10 +67,13 @@ class _SignInState extends State<SignIn> {
                 ),
                 onPressed: () async {
                   if(_formKey.currentState.validate()){
+                    setState(() => loading = true);
                     dynamic result = await _auth.signInWithEmailAndPassword(email, password);
                     if(result == null){
-                      print('errorrr');
-                      setState(() => error = 'please use valid email or password');
+                      setState(() {
+                        error = 'please use valid email or password';
+                        loading = false;
+                      });
                     }
                   }
                 },

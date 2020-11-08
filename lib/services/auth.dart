@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nightingale_v1/models/user.dart';
+import 'package:nightingale_v1/services/database.dart';
 
 class AuthService {
 
@@ -37,8 +38,16 @@ class AuthService {
 
       FirebaseUser user = result.user;
 
-      return _userFromFirebaseUser(user);
+      // //create a new document for the user with the uid 
+      // await DatabaseService(uid: user.uid).updateUserData('0', 'name is a name', 100);
 
+      //med 
+
+      await DatabaseService(uid: user.uid).updateUserData('Paracetamol', 'This is just a random notes');
+
+
+
+      return _userFromFirebaseUser(user);
     } catch(e) {
       print(e.toString());
       return null;
