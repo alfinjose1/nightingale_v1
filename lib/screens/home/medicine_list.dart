@@ -11,17 +11,16 @@ class MedicineList extends StatefulWidget {
 class _MedicineListState extends State<MedicineList> {
   @override
   Widget build(BuildContext context) {
+    final medicines = Provider.of<List<Medicine>>(context) ?? [];
 
-    final medicines = Provider.of<List<Medicine>>(context);
-    
     // medicines.forEach((medicine) {
     //   print(medicine.medName);
     //   print(medicine.notes);
     // });
-    medicines.forEach((medicine) {
-      print(medicine.medName);
-      print(medicine.notes);
-    });
+    // medicines.forEach((medicine) {
+    //   print(medicine.medName);
+    //   print(medicine.notes);
+    // });
 
     return ListView.builder(
       itemCount: medicines.length,
